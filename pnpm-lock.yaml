@@ -11,6 +11,9 @@ importers:
       '@biomejs/biome':
         specifier: ^1.9.0
         version: 1.9.4
+      '@secretlint/secretlint-rule-pattern':
+        specifier: ^8.2.4
+        version: 8.5.0
       '@secretlint/secretlint-rule-preset-recommend':
         specifier: ^8.2.4
         version: 8.5.0
@@ -32,6 +35,9 @@ importers:
 
   apps/web:
     dependencies:
+      '@apse/modules-organizations':
+        specifier: workspace:*
+        version: link:../../packages/modules/organizations
       '@apse/shared-auth':
         specifier: workspace:*
         version: link:../../packages/shared/auth
@@ -109,12 +115,52 @@ importers:
         specifier: ^2.1.4
         version: 2.1.9(@types/node@22.19.17)(jsdom@25.0.1)(lightningcss@1.32.0)
 
+  packages/modules/organizations:
+    dependencies:
+      '@apse/shared-auth':
+        specifier: workspace:*
+        version: link:../../shared/auth
+      '@apse/shared-db':
+        specifier: workspace:*
+        version: link:../../shared/db
+      '@apse/shared-domain':
+        specifier: workspace:*
+        version: link:../../shared/domain
+      '@apse/shared-events':
+        specifier: workspace:*
+        version: link:../../shared/events
+      zod:
+        specifier: ^3.23.8
+        version: 3.25.76
+    devDependencies:
+      typescript:
+        specifier: ^5.6.0
+        version: 5.9.3
+      vitest:
+        specifier: ^2.1.4
+        version: 2.1.9(@types/node@22.19.17)(jsdom@25.0.1)(lightningcss@1.32.0)
+
   packages/shared/auth:
     dependencies:
       '@apse/shared-db':
         specifier: workspace:*
         version: link:../db
+      '@supabase/ssr':
+        specifier: ^0.5.0
+        version: 0.5.2(@supabase/supabase-js@2.103.3)
+      '@supabase/supabase-js':
+        specifier: ^2.45.0
+        version: 2.103.3
+      next:
+        specifier: ^15.1.0
+        version: 15.5.15(@playwright/test@1.59.1)(react-dom@19.2.5(react@19.2.5))(react@19.2.5)
+      react:
+        specifier: ^19.0.0
+        version: 19.2.5
     devDependencies:
+      '@types/react':
+        specifier: ^19.0.0
+        version: 19.2.14
       typescript:
         specifier: ^5.6.0
         version: 5.9.3
@@ -817,12 +863,20 @@ packages:
   '@secretlint/resolver@8.5.0':
     resolution: {integrity: sha512-xa4eBR1UbH/dieZEdZ2+cor9mT6IYgFJWfLGEH+XqFl0EmxnIg/RUjOMV2HvZvmmA3tRjhyP1ko6CEsYaBoULQ==}
 
+  '@secretlint/secretlint-rule-pattern@8.5.0':
+    resolution: {integrity: sha512-pWgGP5Svr+S2AhDwIsrKJXf6IgU/BMhwXenDuR5hyKwiAnzSJbl+sAxfaUPnlTNrt2SB9zSBZnatBpAPkFp/uQ==}
+    engines: {node: ^14.13.1 || >=16.0.0}
+
   '@secretlint/secretlint-rule-preset-recommend@8.5.0':
     resolution: {integrity: sha512-jfvCI2nbQ/k53Ffzm/dEGxV6dW8dzMRAhImZWLc3LBkIjRv3ZcMljvbjqDsrM614QF1BGMWT7D+JCBFmzcfEFA==}
     engines: {node: ^14.13.1 || >=16.0.0}
 
   '@secretlint/source-creator@8.5.0':
     resolution: {integrity: sha512-z0bRqWnB3sL/CbD0wAdl0bBUVJ78njN+GQ5lsvngf21Ap5Hpc4pdU1EIKys99cxTu6cCIp72J3xhPWk4UiI6UA==}
+    engines: {node: ^14.13.1 || >=16.0.0}
+
+  '@secretlint/tester@8.5.0':
+    resolution: {integrity: sha512-SfaDrjuOVXRsOChkh3c2M72pfGXa8YZPZ5+K8EKVEuAqXD8jA4Raj6fgHLB7Ss4stuhfsZTojyDBwHs71n3yIg==}
     engines: {node: ^14.13.1 || >=16.0.0}
 
   '@secretlint/types@8.5.0':
@@ -983,6 +1037,9 @@ packages:
 
   '@textlint/module-interop@14.8.4':
     resolution: {integrity: sha512-1LdPYLAVpa27NOt6EqvuFO99s4XLB0c19Hw9xKSG6xQ1K82nUEyuWhzTQKb3KJ5Qx7qj14JlXZLfnEuL6A16Bw==}
+
+  '@textlint/regexp-string-matcher@2.0.2':
+    resolution: {integrity: sha512-OXLD9XRxMhd3S0LWuPHpiARQOI7z9tCOs0FsynccW2lmyZzHHFJ9/eR6kuK9xF459Qf+740qI5h+/0cx+NljzA==}
 
   '@textlint/resolver@14.8.4':
     resolution: {integrity: sha512-nMDOgDAVwNU9ommh+Db0U+MCMNDPbQ/1HBNjbnHwxZkCpcT6hsAJwBe38CW/DtWVUv8yeR4R40IYNPT84srNwA==}
@@ -1265,6 +1322,10 @@ packages:
     resolution: {integrity: sha512-mg3OPMV4hXywwpoDxu3Qda5xCKQi+vCTZq8S9J/EpkhB2HzKXq4SNFZE3+NK93JYxc8VMSep+lOUSC/RVKaBqw==}
     engines: {node: '>=12'}
     hasBin: true
+
+  escape-string-regexp@4.0.0:
+    resolution: {integrity: sha512-TtpcNJ3XAzx3Gq8sWRzJaVajRs0uVxA2YAkdb1jm2YkPz4G6egUFAyA3n5vtEIZefPk5Wa4UXbKuS5fKkJWdgA==}
+    engines: {node: '>=10'}
 
   esprima@4.0.1:
     resolution: {integrity: sha512-eGuFFw7Upda+g4p+QHvnW0RyTX/SVeJBDM/gCtMARO0cLuT2HcEKnTPvhjV6aGeqrCB/sbNop0Kszm0jsaWU4A==}
@@ -1552,8 +1613,17 @@ packages:
     resolution: {integrity: sha512-wM1+Z03eypVAVUCE7QdSqpVIvelbOakn1M0bPDoA4SGWPx3sNDVUiMo3L6To6WWGClB7VyXnhQ4Sn7gxiJbE6A==}
     engines: {node: ^12.20.0 || ^14.13.1 || >=16.0.0}
 
+  lodash.sortby@4.7.0:
+    resolution: {integrity: sha512-HDWXG8isMntAyRF5vZ7xKuEvOhT4AhlRt/3czTSjvGUxjYCBVRQY48ViDHyfYz9VIoBkW4TMGQNapx+l3RUwdA==}
+
   lodash.truncate@4.4.2:
     resolution: {integrity: sha512-jttmRe7bRse52OsWIMDLaXxWqRAmtIUccAQ3garviCqJjafXOfNMO0yMfNpdD6zbGaTU0P5Nz7e7gAT6cKmJRw==}
+
+  lodash.uniq@4.5.0:
+    resolution: {integrity: sha512-xfBaXQd9ryd9dlSDvnvI0lvxfLJlYAZzXomUYzLKtUeOQvOP5piqAWuGtrhWeqaXK9hhoM/iyJc5AV+XfsX3HQ==}
+
+  lodash.uniqwith@4.5.0:
+    resolution: {integrity: sha512-7lYL8bLopMoy4CTICbxygAUq6CdRJ36vFc80DucPueUee+d5NBRxz3FdT9Pes/HEx5mPoT9jwnsEJWz1N7uq7Q==}
 
   lodash@4.18.1:
     resolution: {integrity: sha512-dMInicTPVE8d1e5otfwmmjlxkZoUpiVLwyeTdUsi/Caj/gfzzblBcCE5sRHV/AsjuCmxWrte2TNGSYuCeCq+0Q==}
@@ -2559,12 +2629,29 @@ snapshots:
 
   '@secretlint/resolver@8.5.0': {}
 
+  '@secretlint/secretlint-rule-pattern@8.5.0':
+    dependencies:
+      '@secretlint/tester': 8.5.0
+      '@secretlint/types': 8.5.0
+      '@textlint/regexp-string-matcher': 2.0.2
+    transitivePeerDependencies:
+      - supports-color
+
   '@secretlint/secretlint-rule-preset-recommend@8.5.0': {}
 
   '@secretlint/source-creator@8.5.0':
     dependencies:
       '@secretlint/types': 8.5.0
       istextorbinary: 6.0.0
+
+  '@secretlint/tester@8.5.0':
+    dependencies:
+      '@secretlint/config-loader': 8.5.0
+      '@secretlint/core': 8.5.0
+      '@secretlint/source-creator': 8.5.0
+      '@secretlint/types': 8.5.0
+    transitivePeerDependencies:
+      - supports-color
 
   '@secretlint/types@8.5.0': {}
 
@@ -2732,6 +2819,13 @@ snapshots:
       - supports-color
 
   '@textlint/module-interop@14.8.4': {}
+
+  '@textlint/regexp-string-matcher@2.0.2':
+    dependencies:
+      escape-string-regexp: 4.0.0
+      lodash.sortby: 4.7.0
+      lodash.uniq: 4.5.0
+      lodash.uniqwith: 4.5.0
 
   '@textlint/resolver@14.8.4': {}
 
@@ -3028,6 +3122,8 @@ snapshots:
       '@esbuild/win32-ia32': 0.21.5
       '@esbuild/win32-x64': 0.21.5
 
+  escape-string-regexp@4.0.0: {}
+
   esprima@4.0.1: {}
 
   estree-walker@3.0.3:
@@ -3291,7 +3387,13 @@ snapshots:
 
   lines-and-columns@2.0.4: {}
 
+  lodash.sortby@4.7.0: {}
+
   lodash.truncate@4.4.2: {}
+
+  lodash.uniq@4.5.0: {}
+
+  lodash.uniqwith@4.5.0: {}
 
   lodash@4.18.1: {}
 

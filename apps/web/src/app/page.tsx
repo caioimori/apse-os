@@ -1,6 +1,20 @@
+import { createServerClient } from '@apse/shared-auth/server';
 import { KPIBlock, Margin, Money, StatusPill } from '@apse/shared-ui';
+import Link from 'next/link';
+import { redirect } from 'next/navigation';
 
-export default function Home() {
+export const dynamic = 'force-dynamic';
+
+export default async function Home() {
+  const supabase = await createServerClient();
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+
+  if (user) {
+    redirect('/orgs');
+  }
+
   return (
     <main className="mx-auto flex min-h-screen max-w-6xl flex-col gap-12 px-6 py-16 sm:px-8">
       <header className="flex flex-col gap-3">
@@ -14,6 +28,14 @@ export default function Home() {
           Lucro real por cliente em tempo real. Conecta CRM, gateway de cobrança e custos em um só
           lugar. Localhost-first, modular, minimalista.
         </p>
+        <div className="mt-2">
+          <Link
+            href="/login"
+            className="inline-flex h-10 items-center rounded-[var(--radius-button)] bg-[var(--text-primary)] px-4 text-sm font-medium text-[var(--surface-base)] transition hover:opacity-90"
+          >
+            Entrar
+          </Link>
+        </div>
       </header>
 
       <section className="grid gap-4 sm:grid-cols-3">

@@ -1,7 +1,6 @@
-// Wrapper Supabase Auth. Implementação em Story 2.1.
-export type AuthUser = {
-  id: string;
-  email: string;
-};
-
-export const AUTH_PLACEHOLDER = true;
+export type { AuthUser } from './types';
+export { createBrowserClient } from './client-browser';
+export { createServerClient } from './client-server';
+export { updateSession } from './middleware';
+export { useUser } from './hooks';
+export { requireUser } from './guards';

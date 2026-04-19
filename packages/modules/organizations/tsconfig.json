@@ -5,12 +5,16 @@
     "rootDir": "src",
     "declaration": true,
     "composite": true,
-    "jsx": "preserve",
     "module": "ESNext",
     "moduleResolution": "Bundler",
-    "lib": ["ES2022", "DOM", "DOM.Iterable"],
+    "lib": ["ES2022", "DOM"],
     "types": ["node"]
   },
   "include": ["src/**/*"],
-  "references": [{ "path": "../db" }]
+  "references": [
+    { "path": "../../shared/auth" },
+    { "path": "../../shared/db" },
+    { "path": "../../shared/domain" },
+    { "path": "../../shared/events" }
+  ]
 }
