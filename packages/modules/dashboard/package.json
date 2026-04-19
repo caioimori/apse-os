@@ -1,0 +1,25 @@
+{
+  "name": "@apse/modules-dashboard",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "exports": {
+    "./api": "./src/api/index.ts"
+  },
+  "scripts": {
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run --passWithNoTests"
+  },
+  "dependencies": {
+    "@apse/modules-billing": "workspace:*",
+    "@apse/modules-clients": "workspace:*",
+    "@apse/modules-contracts": "workspace:*",
+    "@apse/shared-auth": "workspace:*",
+    "@apse/shared-db": "workspace:*",
+    "@apse/shared-domain": "workspace:*"
+  },
+  "devDependencies": {
+    "typescript": "^5.6.0",
+    "vitest": "^2.1.4"
+  }
+}

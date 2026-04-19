@@ -49,6 +49,11 @@ export default async function OrgDetailPage({ params }: { params: Promise<{ id: 
           title="Colaboradores"
           description='Cadastro + lista "a pagar esse mês" derivada dos splits.'
         />
+        <NavCard
+          href={`/orgs/${org.id}/dashboard`}
+          title="Dashboard"
+          description="MRR, lucro estimado, clientes em risco — visão executiva."
+        />
       </section>
     </main>
   );

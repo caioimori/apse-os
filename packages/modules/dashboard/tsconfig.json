@@ -1,0 +1,22 @@
+{
+  "extends": "../../../tsconfig.base.json",
+  "compilerOptions": {
+    "outDir": "dist",
+    "rootDir": "src",
+    "declaration": true,
+    "composite": true,
+    "module": "ESNext",
+    "moduleResolution": "Bundler",
+    "lib": ["ES2022", "DOM"],
+    "types": ["node"]
+  },
+  "include": ["src/**/*"],
+  "references": [
+    { "path": "../billing" },
+    { "path": "../clients" },
+    { "path": "../contracts" },
+    { "path": "../../shared/auth" },
+    { "path": "../../shared/db" },
+    { "path": "../../shared/domain" }
+  ]
+}

@@ -13,6 +13,7 @@
     { "path": "./packages/modules/contracts" },
     { "path": "./packages/modules/billing" },
     { "path": "./packages/modules/collaborators" },
+    { "path": "./packages/modules/dashboard" },
     { "path": "./packages/integrations/asaas" },
     { "path": "./apps/web" }
   ]

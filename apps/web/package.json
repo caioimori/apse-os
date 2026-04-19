@@ -17,6 +17,7 @@
     "@apse/modules-billing": "workspace:*",
     "@apse/modules-clients": "workspace:*",
     "@apse/modules-collaborators": "workspace:*",
+    "@apse/modules-dashboard": "workspace:*",
     "@apse/modules-contracts": "workspace:*",
     "@apse/modules-organizations": "workspace:*",
     "@apse/shared-auth": "workspace:*",
