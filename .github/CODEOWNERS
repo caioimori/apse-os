@@ -1,0 +1,15 @@
+# ApseOS — CODEOWNERS
+# Revisão automática por área. Solo (Caio) pode self-approve; dupla exige o outro.
+
+* @caioimori
+
+# Infra crítica — revisão dupla obrigatória quando Soier entrar
+/.github/         @caioimori
+/supabase/        @caioimori
+/.dependency-cruiser.cjs  @caioimori
+/.husky/          @caioimori
+/biome.json       @caioimori
+
+# Documentação estratégica
+/docs/strategy/   @caioimori
+/docs/adr/        @caioimori

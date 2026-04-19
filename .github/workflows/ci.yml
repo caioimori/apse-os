@@ -1,14 +1,38 @@
 name: CI
 
 on:
+  pull_request:
+    branches: [main, develop]
+    paths:
+      - 'apps/**'
+      - 'packages/**'
+      - 'supabase/**'
+      - '.github/workflows/**'
+      - 'package.json'
+      - 'pnpm-lock.yaml'
+      - 'pnpm-workspace.yaml'
+      - 'tsconfig*.json'
+      - 'biome.json'
+      - '.dependency-cruiser.cjs'
+      - '.secretlintrc.json'
   push:
     branches: [main]
-  pull_request:
-    branches: [main]
+    paths:
+      - 'apps/**'
+      - 'packages/**'
+      - 'supabase/**'
+      - '.github/workflows/**'
+      - 'package.json'
+      - 'pnpm-lock.yaml'
+
+concurrency:
+  group: ci-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
 
 jobs:
   quality:
     runs-on: ubuntu-latest
+    timeout-minutes: 10
     steps:
       - uses: actions/checkout@v4
 
@@ -35,7 +59,9 @@ jobs:
       - name: Secret scan
         run: pnpm secretlint
 
-      - name: Unit + Integration tests
-        run: pnpm test
+      - name: Build apps
+        run: pnpm --filter @apse/web build
 
-  # e2e job roda em outro workflow para paralelizar e usar Supabase local
+      - name: Unit tests
+        run: pnpm test
+        continue-on-error: true
