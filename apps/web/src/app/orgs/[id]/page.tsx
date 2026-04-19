@@ -29,19 +29,37 @@ export default async function OrgDetailPage({ params }: { params: Promise<{ id: 
       </header>
 
       <section className="grid gap-4 sm:grid-cols-2">
-        <Link
+        <NavCard
           href={`/orgs/${org.id}/clients`}
-          className="flex flex-col gap-2 rounded-[var(--radius-card)] border border-[var(--border-default)] bg-[var(--surface-void)] p-6 shadow-[var(--shadow-xs)] transition hover:border-[var(--border-strong)]"
-        >
-          <h2 className="text-lg font-semibold text-[var(--text-primary)]">Clientes</h2>
-          <p className="text-sm text-[var(--text-secondary)]">
-            Gerencia cadastros PF/PJ da organização.
-          </p>
-        </Link>
-        <div className="rounded-[var(--radius-card)] border border-dashed border-[var(--border-default)] p-6 text-sm text-[var(--text-tertiary)]">
-          Contratos + dashboard chegam nas próximas stories (4.x em diante).
-        </div>
+          title="Clientes"
+          description="Gerencia cadastros PF/PJ da organização."
+        />
+        <NavCard
+          href={`/orgs/${org.id}/contracts`}
+          title="Contratos"
+          description="Cliente → receita mensal + splits + preview de margem."
+        />
       </section>
     </main>
+  );
+}
+
+function NavCard({
+  href,
+  title,
+  description,
+}: {
+  href: string;
+  title: string;
+  description: string;
+}) {
+  return (
+    <Link
+      href={href}
+      className="flex flex-col gap-2 rounded-[var(--radius-card)] border border-[var(--border-default)] bg-[var(--surface-void)] p-6 shadow-[var(--shadow-xs)] transition hover:border-[var(--border-strong)]"
+    >
+      <h2 className="text-lg font-semibold text-[var(--text-primary)]">{title}</h2>
+      <p className="text-sm text-[var(--text-secondary)]">{description}</p>
+    </Link>
   );
 }

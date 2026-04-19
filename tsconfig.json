@@ -10,6 +10,7 @@
     { "path": "./packages/shared/ui" },
     { "path": "./packages/modules/organizations" },
     { "path": "./packages/modules/clients" },
+    { "path": "./packages/modules/contracts" },
     { "path": "./apps/web" }
   ]
 }
