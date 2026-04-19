@@ -12,6 +12,7 @@ Registro curto de decisões arquiteturais importantes. Formato: contexto, decis�
 | [ADR-004](./ADR-004-hexagonal-integrations.md) | Hexagonal (ports + adapters) em toda integração | accepted |
 | [ADR-005](./ADR-005-rls-multi-tenant.md) | RLS multi-tenant por `org_id` desde migration 0001 | accepted |
 | [ADR-006](./ADR-006-design-system-minimalista.md) | Design System minimalista (caioimori-DS) | accepted |
+| [ADR-007](./ADR-007-reset-v2-design-first.md) | Reset v2 — rebuild design-first | accepted |
 
 ## Template
 
