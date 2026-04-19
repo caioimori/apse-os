@@ -1,0 +1,13 @@
+{
+  "files": [],
+  "references": [
+    { "path": "./packages/shared/domain" },
+    { "path": "./packages/shared/events" },
+    { "path": "./packages/shared/config" },
+    { "path": "./packages/shared/db" },
+    { "path": "./packages/shared/auth" },
+    { "path": "./packages/shared/flags" },
+    { "path": "./packages/shared/ui" },
+    { "path": "./apps/web" }
+  ]
+}

@@ -13,16 +13,25 @@
     "lint:fix": "biome check --write .",
     "format": "biome format --write .",
     "typecheck": "tsc -b",
-    "test": "pnpm -r test",
+    "depcheck": "depcruise --config .dependency-cruiser.cjs packages apps",
+    "depcheck:graph": "depcruise --config .dependency-cruiser.cjs --output-type dot packages apps | dot -T svg > dependency-graph.svg",
+    "test": "pnpm -r --if-present test",
     "test:e2e": "pnpm --filter @apse/web test:e2e",
     "db:start": "supabase start",
     "db:stop": "supabase stop",
     "db:reset": "supabase db reset",
-    "db:types": "supabase gen types typescript --local > packages/shared/db/types.ts"
+    "db:types": "supabase gen types typescript --local > packages/shared/db/src/types.ts",
+    "db:types:remote": "supabase gen types typescript --project-id vamtjndfjhqtyiejxnbx > packages/shared/db/src/types.ts",
+    "secretlint": "secretlint '**/*'",
+    "prepare": "husky"
   },
   "devDependencies": {
     "@biomejs/biome": "^1.9.0",
+    "@secretlint/secretlint-rule-preset-recommend": "^8.2.4",
+    "@types/node": "^22.9.0",
     "dependency-cruiser": "^16.0.0",
+    "husky": "^9.1.6",
+    "secretlint": "^8.2.4",
     "typescript": "^5.6.0"
   }
 }

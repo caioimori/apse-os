@@ -8,15 +8,18 @@
 
 ## Passo 0 — Bootstrap (Dia 0)
 
-- [ ] `git init` + primeiro commit
-- [ ] `pnpm init` + `pnpm-workspace.yaml` já configurado
-- [ ] Next 15 em `apps/web` via `pnpm create next-app`
-- [ ] Supabase local: `supabase init && supabase start`
-- [ ] Biome + dependency-cruiser configurados
-- [ ] GitHub repo + branch protection (via @devops)
-- [ ] Primeiro deploy Vercel preview funcionando
+- [x] `git init` + primeiro commit
+- [x] `pnpm init` + `pnpm-workspace.yaml` configurado
+- [x] Next 15 em `apps/web` (scaffold manual + Tailwind v4)
+- [x] Supabase **remoto** em vez de local (projeto `apse-os` em sa-east-1)
+- [x] Biome + dependency-cruiser configurados (`.dependency-cruiser.cjs`)
+- [x] husky + secretlint no pre-commit
+- [x] Design tokens caioimori-DS em `@apse/shared-ui`
+- [x] Primeira migration aplicada (orgs + members + RLS)
+- [x] GitHub repo criado (caioimori/apse-os, privado)
+- [ ] Conectar Vercel preview (manual — 5 cliques no dashboard)
 
-**Localhost-complete:** `pnpm dev` abre página Next, Supabase Studio acessível em `:54323`.
+**Localhost-complete:** `pnpm dev` abre Next; migrations rodando contra Supabase remoto.
 
 ---
 

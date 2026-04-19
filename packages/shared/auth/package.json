@@ -1,0 +1,12 @@
+{
+  "name": "@apse/shared-auth",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "exports": { ".": "./src/index.ts" },
+  "scripts": { "typecheck": "tsc --noEmit" },
+  "dependencies": {
+    "@apse/shared-db": "workspace:*"
+  },
+  "devDependencies": { "typescript": "^5.6.0" }
+}

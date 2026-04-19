@@ -30,7 +30,10 @@ jobs:
         run: pnpm typecheck
 
       - name: Dependency boundaries
-        run: pnpm depcruise packages apps
+        run: pnpm depcheck
+
+      - name: Secret scan
+        run: pnpm secretlint
 
       - name: Unit + Integration tests
         run: pnpm test
