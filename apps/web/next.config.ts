@@ -3,6 +3,7 @@ import type { NextConfig } from 'next';
 const config: NextConfig = {
   reactStrictMode: true,
   transpilePackages: [
+    '@apse/modules-clients',
     '@apse/modules-organizations',
     '@apse/shared-auth',
     '@apse/shared-config',
