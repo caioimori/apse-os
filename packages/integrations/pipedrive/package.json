@@ -1,0 +1,13 @@
+{
+  "name": "@apse/integrations-pipedrive",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "exports": { ".": "./src/index.ts" },
+  "scripts": {
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run --passWithNoTests"
+  },
+  "dependencies": { "@apse/integrations-sonar": "workspace:*" },
+  "devDependencies": { "typescript": "^5.6.0", "vitest": "^2.1.4" }
+}

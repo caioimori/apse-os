@@ -52,7 +52,12 @@ export default async function OrgDetailPage({ params }: { params: Promise<{ id: 
         <NavCard
           href={`/orgs/${org.id}/dashboard`}
           title="Dashboard"
-          description="MRR, lucro estimado, clientes em risco — visão executiva."
+          description="MRR, lucro estimado, clientes em risco + insights mock."
+        />
+        <NavCard
+          href={`/orgs/${org.id}/import`}
+          title="Importar CRM"
+          description="Sonar/Pipedrive mock → puxa leads ganhos como clientes."
         />
       </section>
     </main>

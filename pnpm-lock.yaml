@@ -38,6 +38,18 @@ importers:
       '@apse/integrations-asaas':
         specifier: workspace:*
         version: link:../../packages/integrations/asaas
+      '@apse/integrations-claude':
+        specifier: workspace:*
+        version: link:../../packages/integrations/claude
+      '@apse/integrations-pipedrive':
+        specifier: workspace:*
+        version: link:../../packages/integrations/pipedrive
+      '@apse/integrations-resend':
+        specifier: workspace:*
+        version: link:../../packages/integrations/resend
+      '@apse/integrations-sonar':
+        specifier: workspace:*
+        version: link:../../packages/integrations/sonar
       '@apse/modules-billing':
         specifier: workspace:*
         version: link:../../packages/modules/billing
@@ -138,6 +150,46 @@ importers:
       zod:
         specifier: ^3.23.8
         version: 3.25.76
+    devDependencies:
+      typescript:
+        specifier: ^5.6.0
+        version: 5.9.3
+      vitest:
+        specifier: ^2.1.4
+        version: 2.1.9(@types/node@22.19.17)(jsdom@25.0.1)(lightningcss@1.32.0)
+
+  packages/integrations/claude:
+    devDependencies:
+      typescript:
+        specifier: ^5.6.0
+        version: 5.9.3
+      vitest:
+        specifier: ^2.1.4
+        version: 2.1.9(@types/node@22.19.17)(jsdom@25.0.1)(lightningcss@1.32.0)
+
+  packages/integrations/pipedrive:
+    dependencies:
+      '@apse/integrations-sonar':
+        specifier: workspace:*
+        version: link:../sonar
+    devDependencies:
+      typescript:
+        specifier: ^5.6.0
+        version: 5.9.3
+      vitest:
+        specifier: ^2.1.4
+        version: 2.1.9(@types/node@22.19.17)(jsdom@25.0.1)(lightningcss@1.32.0)
+
+  packages/integrations/resend:
+    devDependencies:
+      typescript:
+        specifier: ^5.6.0
+        version: 5.9.3
+      vitest:
+        specifier: ^2.1.4
+        version: 2.1.9(@types/node@22.19.17)(jsdom@25.0.1)(lightningcss@1.32.0)
+
+  packages/integrations/sonar:
     devDependencies:
       typescript:
         specifier: ^5.6.0

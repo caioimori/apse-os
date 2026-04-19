@@ -1,3 +1,4 @@
+import { claude } from '@apse/integrations-claude';
 import { getOrgOverview } from '@apse/modules-dashboard/api';
 import { getOrg } from '@apse/modules-organizations/api';
 import { requireUser } from '@apse/shared-auth/guards';
@@ -12,7 +13,10 @@ export default async function DashboardPage({ params }: { params: Promise<{ id: 
   const { id } = await params;
   const org = await getOrg(id);
   if (!org) notFound();
-  const ov = await getOrgOverview(id);
+  const [ov, insights] = await Promise.all([
+    getOrgOverview(id),
+    claude().generateInsights({ orgId: id }),
+  ]);
 
   return (
     <main className="mx-auto flex min-h-screen max-w-6xl flex-col gap-8 px-6 py-12">
@@ -63,6 +67,26 @@ export default async function DashboardPage({ params }: { params: Promise<{ id: 
             ) : null
           }
         />
+      </section>
+
+      <section className="rounded-[var(--radius-card)] border border-[var(--border-default)] bg-[var(--surface-void)] p-6 shadow-[var(--shadow-xs)]">
+        <h2 className="mb-3 flex items-center gap-2 text-xs font-medium uppercase tracking-[var(--tracking-wide)] text-[var(--text-tertiary)]">
+          <span>Insights</span>
+          <span className="rounded-full border border-[var(--border-default)] bg-[var(--surface-base)] px-2 py-0.5 text-[10px] normal-case tracking-normal text-[var(--text-tertiary)]">
+            mock · ADR-003
+          </span>
+        </h2>
+        <ul className="flex flex-col gap-3">
+          {insights.map((i) => (
+            <li
+              key={i.headline}
+              className="border-b border-[var(--border-subtle)] pb-3 last:border-0 last:pb-0"
+            >
+              <p className="text-sm font-medium text-[var(--text-primary)]">{i.headline}</p>
+              <p className="mt-1 text-xs text-[var(--text-secondary)]">{i.detail}</p>
+            </li>
+          ))}
+        </ul>
       </section>
 
       <section className="grid gap-4 lg:grid-cols-2">
