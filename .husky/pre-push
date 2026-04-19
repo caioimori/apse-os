@@ -1,0 +1,20 @@
+#!/usr/bin/env sh
+# Bloqueia push direto em branches protegidas.
+# Enforcement local enquanto repo é privado no Free plan (sem branch protection nativa).
+
+protected_re='^(refs/heads/main|refs/heads/develop)$'
+current_branch=$(git rev-parse --symbolic-full-name HEAD)
+
+while read local_ref local_sha remote_ref remote_sha; do
+  if echo "$remote_ref" | grep -qE "$protected_re"; then
+    echo ""
+    echo "✖ Push direto em $remote_ref bloqueado."
+    echo "  Use gitflow: caio/feat/<slug> → PR → $remote_ref"
+    echo "  Ver CONTRIBUTING.md"
+    echo ""
+    echo "  Emergência? \`git push --no-verify\` (documente o motivo)."
+    exit 1
+  fi
+done
+
+exit 0
