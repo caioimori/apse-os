@@ -16,7 +16,9 @@
 - [x] husky + secretlint no pre-commit
 - [x] Design tokens caioimori-DS em `@apse/shared-ui`
 - [x] Primeira migration aplicada (orgs + members + RLS)
-- [x] GitHub repo criado (caioimori/apse-os, privado)
+- [x] GitHub repo criado — **público** em caioimori/apse-os
+- [x] Rulesets em main e develop (PR obrigatório + CI gating em main)
+- [x] CONTRIBUTING.md + PR template + CODEOWNERS + husky pre-push
 - [ ] Conectar Vercel preview (manual — 5 cliques no dashboard)
 
 **Localhost-complete:** `pnpm dev` abre Next; migrations rodando contra Supabase remoto.
@@ -25,26 +27,30 @@
 
 ## Passo 1 — DB + Seeds (shared/db)
 
-- [ ] Migration `0001_init.sql` com: organizations, members
-- [ ] Migration `0002_core.sql` com: clients, contracts, contract_splits, contract_costs
-- [ ] Migration `0003_billing.sql` com: invoices, transactions, collaborators, collaborator_payments, costs
-- [ ] Migration `0004_views.sql` com: mv_client_profitability, mv_org_dashboard
-- [ ] RLS em TODAS as tabelas por `org_id` (desde migration 0001)
+- [x] Migration `0001_init` com: organizations, members (aplicada remoto)
+- [x] Migration `0002` — pin search_path em set_updated_at (security advisor)
+- [ ] Migration `0003_core` com: clients, contracts, contract_splits, contract_costs
+- [ ] Migration `0004_billing` com: invoices, transactions, collaborators, collaborator_payments, costs
+- [ ] Migration `0005_views` com: mv_client_profitability, mv_org_dashboard
+- [x] RLS em TODAS as tabelas por `org_id` (desde migration 0001)
 - [ ] Seeds de dev com 1 org SINAPSE + 4 clients + contratos realistas
-- [ ] `pnpm db:types` gera types para `packages/shared/db/types.ts`
+- [x] types.ts gerado de remoto (`pnpm db:types:remote`)
 
-**Localhost-complete:** `supabase db reset` roda tudo, Studio mostra dados.
+**Localhost-complete:** cada PR com migration aplica via MCP Supabase; types regenerados.
 
 ---
 
-## Passo 2 — Auth (shared/auth + modules/organizations)
+## Passo 2 — Auth (shared/auth + modules/organizations) ✅ DONE
 
-- [ ] Supabase Auth com email magic link
-- [ ] Telas: login, signup, invite member
-- [ ] Wrapper `@apse/shared-auth` com hooks (useUser, useOrg)
-- [ ] Módulo `organizations` com CRUD de org + members
+- [x] Supabase Auth com email magic link (@supabase/ssr + Next 15)
+- [x] Telas: login, callback, onboarding, orgs list, org detail stub
+- [x] Wrapper `@apse/shared-auth` com hooks (useUser, requireUser server guard)
+- [x] Módulo `@apse/modules-organizations` com listMyOrgs/getOrg/createOrg/inviteMember
+- [x] Middleware protege rotas autenticadas
+- [x] 16 contract tests passando
 
-**Localhost-complete:** usuário entra, vê dashboard vazio, tem org padrão criada.
+**Localhost-complete:** user loga → onboarding cria org → cai em /orgs.
+**PR #1 merged** (squash) em develop.
 
 ---
 

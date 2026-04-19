@@ -10,17 +10,21 @@ Convenção: `{epicNum}.{storyNum}.{slug}.md`. Status: `Draft → Ready → InPr
 ## Epic 0 — Foundation
 | ID | Título | Status |
 |---|---|---|
-| [0.1](./0.1.bootstrap-monorepo.md) | Bootstrap monorepo + toolchain | Ready |
-| [0.2](./0.2.design-system-foundation.md) | Design system foundation — componentes financeiros | Draft |
+| [0.1](./0.1.bootstrap-monorepo.md) | Bootstrap monorepo + toolchain | **Done** |
+| [0.2](./0.2.design-system-foundation.md) | Design system foundation — componentes financeiros | Draft (primitivos Money/Margin/KPIBlock/StatusPill já em `@apse/shared-ui`) |
 
 ## Epic 1 — SINAPSE dogfood (MVP)
-Stories criadas sob demanda antes de cada implementação (evitar docs mortas). Mapa do Roadmap:
+
+| ID | Título | Status |
+|---|---|---|
+| [2.1](./2.1.auth-organizations.md) | Auth (magic link) + módulo organizations | **Done** |
+
+Stories seguintes criadas sob demanda antes de cada implementação (evitar docs mortas). Mapa do Roadmap:
 
 | Passo | Story prevista | Quando criar |
 |---|---|---|
-| 1 | `1.1.db-seeds.md` | Antes do Passo 1 |
-| 2 | `2.1.auth-organizations.md` | Antes do Passo 2 |
-| 3 | `3.1.clients-crud.md` | Antes do Passo 3 |
+| 1 | Migrations core + seeds | Junto com cada módulo novo (incremental) |
+| 3 | `3.1.clients-crud.md` | Antes do Passo 3 — **próxima** |
 | 4 | `4.1.contracts-pricing.md` | Antes do Passo 4 |
 | 5 | `5.1.billing-mock.md` | Antes do Passo 5 |
 | 6 | `6.1.collaborators.md` | Antes do Passo 6 |
