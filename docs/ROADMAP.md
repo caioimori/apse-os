@@ -1,186 +1,125 @@
 # ApseOS — ROADMAP executável
 
 > Checklist dos 12 passos do plano localhost-first.
-> Cada passo define o que é "localhost-complete" e qual integração plugar depois.
-> Detalhes completos: `docs/architecture/plano-modularizacao-localhost-first.md`
+> Status 2026-04-19: **MVP localhost-complete**. Passos 0-7 + 10-12 concluídos.
 
 ---
 
-## Passo 0 — Bootstrap (Dia 0)
+## Passo 0 — Bootstrap ✅ DONE
 
-- [x] `git init` + primeiro commit
-- [x] `pnpm init` + `pnpm-workspace.yaml` configurado
-- [x] Next 15 em `apps/web` (scaffold manual + Tailwind v4)
-- [x] Supabase **remoto** em vez de local (projeto `apse-os` em sa-east-1)
-- [x] Biome + dependency-cruiser configurados (`.dependency-cruiser.cjs`)
-- [x] husky + secretlint no pre-commit
+- [x] Monorepo pnpm + Next 15 + Tailwind v4 + Biome
+- [x] Supabase remoto apse-os (sa-east-1) — migrations via MCP
+- [x] dependency-cruiser + husky + secretlint
 - [x] Design tokens caioimori-DS em `@apse/shared-ui`
-- [x] Primeira migration aplicada (orgs + members + RLS)
-- [x] GitHub repo criado — **público** em caioimori/apse-os
-- [x] Rulesets em main e develop (PR obrigatório + CI gating em main)
-- [x] CONTRIBUTING.md + PR template + CODEOWNERS + husky pre-push
-- [ ] Conectar Vercel preview (manual — 5 cliques no dashboard)
-
-**Localhost-complete:** `pnpm dev` abre Next; migrations rodando contra Supabase remoto.
+- [x] GitHub público + rulesets main/develop + PR template + CODEOWNERS + CONTRIBUTING
+- [ ] Vercel preview (manual, 2 cliques)
 
 ---
 
-## Passo 1 — DB + Seeds (shared/db)
+## Passo 1 — DB ✅ DONE (incremental por story)
 
-- [x] Migration `0001_init` com: organizations, members (aplicada remoto)
-- [x] Migration `0002` — pin search_path em set_updated_at (security advisor)
-- [ ] Migration `0003_core` com: clients, contracts, contract_splits, contract_costs
-- [ ] Migration `0004_billing` com: invoices, transactions, collaborators, collaborator_payments, costs
-- [ ] Migration `0005_views` com: mv_client_profitability, mv_org_dashboard
-- [x] RLS em TODAS as tabelas por `org_id` (desde migration 0001)
-- [ ] Seeds de dev com 1 org SINAPSE + 4 clients + contratos realistas
-- [x] types.ts gerado de remoto (`pnpm db:types:remote`)
+Migrations aplicadas (cada uma na story que precisou):
+- [x] 0001 organizations + members + RLS
+- [x] 0002 fix set_updated_at search_path
+- [x] 0003 clients
+- [x] 0004 contracts + contract_splits
+- [x] 0005 invoices
+- [x] 0006 collaborators + collaborator_payments
 
-**Localhost-complete:** cada PR com migration aplica via MCP Supabase; types regenerados.
-
----
-
-## Passo 2 — Auth (shared/auth + modules/organizations) ✅ DONE
-
-- [x] Supabase Auth com email magic link (@supabase/ssr + Next 15)
-- [x] Telas: login, callback, onboarding, orgs list, org detail stub
-- [x] Wrapper `@apse/shared-auth` com hooks (useUser, requireUser server guard)
-- [x] Módulo `@apse/modules-organizations` com listMyOrgs/getOrg/createOrg/inviteMember
-- [x] Middleware protege rotas autenticadas
-- [x] 16 contract tests passando
-
-**Localhost-complete:** user loga → onboarding cria org → cai em /orgs.
-**PR #1 merged** (squash) em develop.
+Seeds: deferidos (Caio cadastra dados reais direto — dogfood).
+Types: `pnpm db:types:remote` mantém `packages/shared/db/src/types.ts` atualizado.
 
 ---
 
-## Passo 3 — Clients (modules/clients)
+## Passo 2 — Auth ✅ DONE · PR #1
 
-- [ ] CRUD clients PF/PJ
-- [ ] Listagem + filtro + busca
-- [ ] Form com validação Zod
-- [ ] API pública do módulo: `getClient`, `listClients`, `createClient`
-
-**Localhost-complete:** Caio cadastra os 4 clientes reais da SINAPSE.
-**Dogfood activation #1** — começa usar.
+`@apse/shared-auth` + `@apse/modules-organizations`. Magic link Supabase. Middleware protege rotas.
 
 ---
 
-## Passo 4 — Contracts + Pricing (modules/contracts + shared/domain)
+## Passo 3 — Clients ✅ DONE · PR #3
 
-- [ ] Form de contrato com splits (entre sócios + freelas + custos)
-- [ ] Preview de margem antes de fechar (domain puro TypeScript)
-- [ ] Histórico de contratos por cliente
-- [ ] API pública: `createContract`, `calculateMargin`, `listContractsByClient`
-
-**Localhost-complete:** cadastrar contrato reflete split correto.
+CRUD PF/PJ com máscara CPF/CNPJ. Lista/busca/edit/arquivar.
+**Dogfood activation #1** — Caio pode cadastrar MindLoop + clientes reais.
 
 ---
 
-## Passo 5 — Billing MOCK (modules/billing + integrations/asaas mock)
+## Passo 4 — Contracts + Pricing ✅ DONE · PR #4
 
-- [ ] `integrations/asaas/port.ts` — interface
-- [ ] `integrations/asaas/mock.ts` — gera invoice fake, dispara webhook simulado 5s depois
-- [ ] Módulo `billing` consome factory (flag `APSE_ASAAS_MODE=mock`)
-- [ ] Fluxo end-to-end: contract → invoice criada → webhook → transaction registrada
-
-**Localhost-complete:** cobrança funciona 100% sem Asaas real.
+Migration contracts + contract_splits. Domain `calculateMargin()`. Preview tempo real no form.
 
 ---
 
-## Passo 6 — Collaborators (modules/collaborators)
+## Passo 5 — Billing MOCK ✅ DONE · PR #5
 
-- [ ] CRUD colaboradores
-- [ ] Cálculo de quanto cada um recebe por contrato (usa splits)
-- [ ] Lista "a pagar sexta-feira"
-- [ ] API pública: `listPayable`, `markPaid`
-
-**Localhost-complete:** Caio vê lista real de quem pagar.
+`@apse/integrations-asaas` hexagonal. Mock determinístico. "Gerar cobrança" + "Simular pagamento".
 
 ---
 
-## Passo 7 — Dashboard (modules/dashboard)
+## Passo 6 — Collaborators ✅ DONE · PR #6
 
-- [ ] MRR, lucro líquido, top clientes
-- [ ] Alertas (cliente deu prejuízo, contrato vencendo)
-- [ ] Materialized views refresh automático
-- [ ] Filtros por período
-
-**Localhost-complete:** dashboard completo com dados de mock billing.
-**Dogfood activation #2** — Caio olha diariamente.
+Cadastro + lista "a pagar esse mês" derivada dos splits de kind='collaborator'.
 
 ---
 
-## Passo 8 — QA gates + E2E Playwright
+## Passo 7 — Dashboard ✅ DONE · PR #7
 
-- [ ] Contract tests entre todos os módulos
-- [ ] E2E Playwright: login → cliente → contrato → invoice → dashboard
-- [ ] Unit tests em `shared/domain` (80%+)
-- [ ] CI GitHub Actions completo
-
-**Gate:** antes de trocar mock Asaas por sandbox real, CI tem que estar verde.
+`@apse/modules-dashboard` consolida MRR, custos, margem média, top clientes, clientes em risco.
+**Dogfood activation #2** — Caio olha dashboard diariamente.
 
 ---
 
-## Passo 9 — **Swap: Asaas mock → sandbox** ⭐
+## Passo 8 — QA gates + E2E Playwright (deferido)
 
-- [ ] `integrations/asaas/sandbox.ts` implementa port
-- [ ] Flag `APSE_ASAAS_MODE=sandbox` troca adapter
-- [ ] Webhook real do Asaas sandbox configurado
-- [ ] E2E do passo 8 continua passando SEM MUDAR código dos módulos
+- [x] Biome + tsc + dependency-cruiser + secretlint + contract tests no CI
+- [ ] Playwright E2E (infra `@playwright/test` já instalada, scripts ainda não escritos)
 
-**Primeiro teste real:** integração funciona sem quebrar nada.
+Decisão: escrever E2E quando dogfood produzir bug real. Não escrever antes.
 
 ---
 
-## Passo 10 — Integração CRM (Sonar ou Pipedrive)
+## Passo 9 — Swap Asaas mock → sandbox
 
-- [ ] `integrations/sonar/mock.ts` retorna 5 clientes fake
-- [ ] Tela de "importar clientes do CRM"
-- [ ] Swap mock → real via flag
-
-**Localhost-complete:** importa clientes fake → funciona.
+Stub em `packages/integrations/asaas/sandbox.ts`. Implementação real adiada até `APSE_ASAAS_MODE=sandbox` valer a pena — hoje mock serve o dogfood.
 
 ---
 
-## Passo 11 — Email (Resend)
+## Passo 10 — CRM integration ✅ DONE (mock) · PR #8
 
-- [ ] `integrations/resend/mock.ts` loga em `.tmp/emails/`
-- [ ] Templates: invoice criada, pagamento recebido, alerta
-- [ ] Swap mock → real via flag `APSE_RESEND_MODE=production`
+`@apse/integrations-sonar` com 5 fixtures (3 won, 2 open).
+`@apse/integrations-pipedrive` compartilha port do Sonar (mock vazio).
+UI `/orgs/[id]/import` → importa lead como cliente.
 
 ---
 
-## Passo 12 — Claude (revisão final)
+## Passo 11 — Email ✅ DONE (mock) · PR #8
 
-**Decisão pendente — ver `docs/strategy/decisao-claude-max-nao-api.md`**
+`@apse/integrations-resend` mock loga em console + inbox in-memory.
+Swap `APSE_RESEND_MODE=production` quando plugar Resend real.
 
-No MVP, Claude fica APENAS em modo mock. `production.ts` vazio.
+---
 
-- [ ] `integrations/claude/mock.ts` com 3-5 fixtures realistas
-- [ ] UI renderiza placeholders de "insight IA" consumindo mock
-- [ ] Zero chamada LLM em runtime no fluxo do usuário
+## Passo 12 — Claude ✅ DONE (mock-only, ADR-003) · PR #8
 
-**Reavaliar gateway quando:** R$ 10k MRR bate OU cliente pede feature AI específica OU free tier viável (Groq/Gemini) OU Claude Agent SDK produção-ready.
+`@apse/integrations-claude` com 4 kinds de insights fixtures.
+`production.ts` throws — ADR-003 NON-NEGOTIABLE.
+Dashboard exibe 3 insights no topo.
 
 ---
 
 ## Passo 13 (pós-MVP) — Deploy produção
 
-- [ ] Domínio apontado
-- [ ] Supabase projeto produção + migrations aplicadas
-- [ ] Asaas produção (homologação aprovada)
-- [ ] Vercel produção + env vars reais
-- [ ] Sentry + PostHog ligados
+- [ ] Vercel com env vars reais
+- [ ] Asaas sandbox → production (Passo 9)
+- [ ] Resend production (Passo 11)
+- [ ] Sentry + PostHog
+- [ ] Domínio + DNS
 - [ ] Backup + DR básico
-
-**Entregável final:** SINAPSE rodando 100% financeiro no ApseOS.
 
 ---
 
-## Estimativa total
+## Estado atual
 
-**4-6 madrugadas em dupla (Caio + Soier) OU 8-10 noites solo.**
+**MVP funcional em develop.** Caio pode logar, criar org, cadastrar clientes/contratos/colaboradores, gerar cobranças mock, marcar pagas, ver dashboard, importar do CRM mock. Tudo com RLS multi-tenant, modular monolith, zero LLM em runtime, design caioimori-DS dark-compatible.
 
-Dogfood real começa no Passo 3.
-Cobrança real (Asaas produção) no Passo 13.
+**Próximo passo:** dogfood real com dados da SINAPSE. Bugs e gaps que aparecerem viram stories pós-MVP.
