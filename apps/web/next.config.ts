@@ -6,6 +6,7 @@ const config: NextConfig = {
     '@apse/integrations-asaas',
     '@apse/modules-billing',
     '@apse/modules-clients',
+    '@apse/modules-collaborators',
     '@apse/modules-contracts',
     '@apse/modules-organizations',
     '@apse/shared-auth',

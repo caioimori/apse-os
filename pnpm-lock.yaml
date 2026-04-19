@@ -44,6 +44,9 @@ importers:
       '@apse/modules-clients':
         specifier: workspace:*
         version: link:../../packages/modules/clients
+      '@apse/modules-collaborators':
+        specifier: workspace:*
+        version: link:../../packages/modules/collaborators
       '@apse/modules-contracts':
         specifier: workspace:*
         version: link:../../packages/modules/contracts
@@ -185,6 +188,31 @@ importers:
       '@apse/shared-events':
         specifier: workspace:*
         version: link:../../shared/events
+      zod:
+        specifier: ^3.23.8
+        version: 3.25.76
+    devDependencies:
+      typescript:
+        specifier: ^5.6.0
+        version: 5.9.3
+      vitest:
+        specifier: ^2.1.4
+        version: 2.1.9(@types/node@22.19.17)(jsdom@25.0.1)(lightningcss@1.32.0)
+
+  packages/modules/collaborators:
+    dependencies:
+      '@apse/modules-contracts':
+        specifier: workspace:*
+        version: link:../contracts
+      '@apse/shared-auth':
+        specifier: workspace:*
+        version: link:../../shared/auth
+      '@apse/shared-db':
+        specifier: workspace:*
+        version: link:../../shared/db
+      '@apse/shared-domain':
+        specifier: workspace:*
+        version: link:../../shared/domain
       zod:
         specifier: ^3.23.8
         version: 3.25.76
