@@ -3,27 +3,8 @@ name: CI
 on:
   pull_request:
     branches: [main, develop]
-    paths:
-      - 'apps/**'
-      - 'packages/**'
-      - 'supabase/**'
-      - '.github/workflows/**'
-      - 'package.json'
-      - 'pnpm-lock.yaml'
-      - 'pnpm-workspace.yaml'
-      - 'tsconfig*.json'
-      - 'biome.json'
-      - '.dependency-cruiser.cjs'
-      - '.secretlintrc.json'
   push:
     branches: [main]
-    paths:
-      - 'apps/**'
-      - 'packages/**'
-      - 'supabase/**'
-      - '.github/workflows/**'
-      - 'package.json'
-      - 'pnpm-lock.yaml'
 
 concurrency:
   group: ci-${{ github.workflow }}-${{ github.ref }}
@@ -41,25 +22,42 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version-file: '.nvmrc'
-          cache: 'pnpm'
 
-      - run: pnpm install --frozen-lockfile
+      - name: Install root deps
+        run: pnpm install --ignore-workspace
 
       - name: Lint (Biome)
         run: pnpm lint
 
-      - name: Typecheck
-        run: pnpm typecheck
-
-      - name: Dependency boundaries
-        run: pnpm depcheck
-
       - name: Secret scan
         run: pnpm secretlint
 
-      - name: Build apps
-        run: pnpm --filter @apse/web build
+      - name: Check code workspace present
+        id: check_workspace
+        run: |
+          if [ -d "apps" ] || [ -d "packages" ] && [ -n "$(ls -A apps 2>/dev/null)" ] || [ -n "$(ls -A packages 2>/dev/null)" ]; then
+            echo "has_code=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "has_code=false" >> "$GITHUB_OUTPUT"
+          fi
 
-      - name: Unit tests
-        run: pnpm test
+      - name: Workspace install (if code exists)
+        if: steps.check_workspace.outputs.has_code == 'true'
+        run: pnpm install --frozen-lockfile
+
+      - name: Typecheck
+        if: steps.check_workspace.outputs.has_code == 'true'
+        run: pnpm -r --if-present typecheck
+
+      - name: Dependency boundaries
+        if: steps.check_workspace.outputs.has_code == 'true'
+        run: pnpm depcheck
+
+      - name: Build
+        if: steps.check_workspace.outputs.has_code == 'true'
+        run: pnpm -r --if-present build
+
+      - name: Tests
+        if: steps.check_workspace.outputs.has_code == 'true'
+        run: pnpm -r --if-present test
         continue-on-error: true
