@@ -174,6 +174,46 @@ Observação: screenshots não capturam motion, mas por convenção Tailwind + R
 9. **Toolbar rica com ícones.** Actions como "Exportar", "Customizar" com mini-ícones dão sofisticação sem gastar pixel de label.
 10. **Cor semântica com saturação controlada.** Verde do brand (mint saturado), teal (success deep), roxo (Pix), laranja (warn), rose (destrutivo). Nunca mais de 2 acentos na mesma tela.
 
+## Motion — análise honesta
+
+Extraí CSS completo + 33 frames de screencast durante hover. Verdict: **AbacatePay é weak em motion**.
+
+### Evidência bruta (motion-rules.json)
+
+- **13 transitions CSS customizadas** — TODAS de libs de terceiros (sonner toast, driver.js onboarding). Zero motion "autoral".
+- **14 animations** — 2 da app (`feedbackTrackLeft/Right` pro carousel de depoimentos, provavelmente fora do dashboard), resto é lib.
+- **21 keyframes** — 100% utility Tailwind (spin, pulse, bounce, skeleton) ou libs.
+- **25 transforms** — apenas em elementos internos de libs.
+
+### Padrão real em elementos interativos
+
+Via `interactive-samples.json` (30 botões/links amostrados):
+- Todos usam Tailwind default `transition: color 0.15s cubic-bezier(0.4, 0, 0.2, 1)` + mesma curve pra bg/border/etc — **ease-in-out padrão, 150-200ms**
+- **Hover effect dominante: `hover:opacity-50`** ← anti-pattern visível, transmite "disabled" em vez de "interactive"
+- **Zero `transform` em hover/active** — sem lift, sem scale, sem shadow animation
+- Active state dos nav items é troca de cor pura (sem bounce, sem scale)
+
+### Veredicto
+
+AbacatePay vende credibilidade por **estrutura e consistência**, não por motion. É um "competent minimum" — o mesmo padrão que 80% dos dashboards usam por default do Tailwind.
+
+**Isso é exatamente o que o DESIGN_BRIEF do ApseOS diagnosticou como erro #3 ("Zero motion com propósito") na v0.1.**
+
+Ou seja: se copiarmos só AbacatePay, vamos cair no mesmo buraco. Pra motion de verdade precisamos olhar:
+- **Linear** — spring physics em abertura de modal, tactile em hover de row
+- **Vercel** — transições de rota suaves, skeleton coordenado
+- **Stripe** — number ticker em KPIs, countUp em totais
+- **Framer Motion / GSAP** — biblioteca padrão se queremos ir além de Tailwind transition
+
+### Recomendação pro DESIGN_BRIEF
+
+Manter os 10 princípios mas **refinar o de motion** pra:
+- Transições de cor/border em 150-200ms ease-in-out (AbacatePay-like baseline)
+- PLUS: `translateY(-1px)` + shadow lift em hover de card/row (Linear-like)
+- PLUS: countUp em Money quando valor muda (Stripe-like)
+- PLUS: fade-in com `transform: translateY(8px)` em mount de página (Vercel-like)
+- PLUS: skeleton shimmer em loading, nunca spinner
+
 ## Como o ApseOS v2 deve ser **diferente**
 
 Não copiar direto porque:
