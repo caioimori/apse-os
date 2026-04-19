@@ -8,6 +8,7 @@ const config: NextConfig = {
     '@apse/modules-clients',
     '@apse/modules-collaborators',
     '@apse/modules-contracts',
+    '@apse/modules-dashboard',
     '@apse/modules-organizations',
     '@apse/shared-auth',
     '@apse/shared-config',
