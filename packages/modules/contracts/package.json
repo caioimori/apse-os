@@ -1,16 +1,21 @@
 {
-  "name": "@apse/shared-domain",
+  "name": "@apse/modules-contracts",
   "version": "0.0.0",
   "private": true,
   "type": "module",
   "exports": {
-    ".": "./src/index.ts"
+    "./api": "./src/api/index.ts",
+    "./api/contracts": "./src/api/contracts.ts"
   },
   "scripts": {
     "typecheck": "tsc --noEmit",
     "test": "vitest run"
   },
   "dependencies": {
+    "@apse/shared-auth": "workspace:*",
+    "@apse/shared-db": "workspace:*",
+    "@apse/shared-domain": "workspace:*",
+    "@apse/shared-events": "workspace:*",
     "zod": "^3.23.8"
   },
   "devDependencies": {

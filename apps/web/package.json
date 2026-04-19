@@ -14,6 +14,7 @@
   },
   "dependencies": {
     "@apse/modules-clients": "workspace:*",
+    "@apse/modules-contracts": "workspace:*",
     "@apse/modules-organizations": "workspace:*",
     "@apse/shared-auth": "workspace:*",
     "@apse/shared-config": "workspace:*",
