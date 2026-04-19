@@ -4,6 +4,10 @@ const config: NextConfig = {
   reactStrictMode: true,
   transpilePackages: [
     '@apse/integrations-asaas',
+    '@apse/integrations-claude',
+    '@apse/integrations-pipedrive',
+    '@apse/integrations-resend',
+    '@apse/integrations-sonar',
     '@apse/modules-billing',
     '@apse/modules-clients',
     '@apse/modules-collaborators',

@@ -15,6 +15,10 @@
     { "path": "./packages/modules/collaborators" },
     { "path": "./packages/modules/dashboard" },
     { "path": "./packages/integrations/asaas" },
+    { "path": "./packages/integrations/claude" },
+    { "path": "./packages/integrations/resend" },
+    { "path": "./packages/integrations/sonar" },
+    { "path": "./packages/integrations/pipedrive" },
     { "path": "./apps/web" }
   ]
 }
