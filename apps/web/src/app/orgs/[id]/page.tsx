@@ -44,6 +44,11 @@ export default async function OrgDetailPage({ params }: { params: Promise<{ id: 
           title="Cobranças"
           description="Invoices geradas a partir de contratos (mock Asaas por padrão)."
         />
+        <NavCard
+          href={`/orgs/${org.id}/collaborators`}
+          title="Colaboradores"
+          description='Cadastro + lista "a pagar esse mês" derivada dos splits.'
+        />
       </section>
     </main>
   );
