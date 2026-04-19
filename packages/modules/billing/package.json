@@ -1,0 +1,27 @@
+{
+  "name": "@apse/modules-billing",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "exports": {
+    "./api": "./src/api/index.ts",
+    "./api/contracts": "./src/api/contracts.ts"
+  },
+  "scripts": {
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "@apse/integrations-asaas": "workspace:*",
+    "@apse/modules-contracts": "workspace:*",
+    "@apse/shared-auth": "workspace:*",
+    "@apse/shared-db": "workspace:*",
+    "@apse/shared-domain": "workspace:*",
+    "@apse/shared-events": "workspace:*",
+    "zod": "^3.23.8"
+  },
+  "devDependencies": {
+    "typescript": "^5.6.0",
+    "vitest": "^2.1.4"
+  }
+}

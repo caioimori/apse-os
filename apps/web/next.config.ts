@@ -3,6 +3,8 @@ import type { NextConfig } from 'next';
 const config: NextConfig = {
   reactStrictMode: true,
   transpilePackages: [
+    '@apse/integrations-asaas',
+    '@apse/modules-billing',
     '@apse/modules-clients',
     '@apse/modules-contracts',
     '@apse/modules-organizations',
