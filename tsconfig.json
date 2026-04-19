@@ -9,6 +9,7 @@
     { "path": "./packages/shared/flags" },
     { "path": "./packages/shared/ui" },
     { "path": "./packages/modules/organizations" },
+    { "path": "./packages/modules/clients" },
     { "path": "./apps/web" }
   ]
 }

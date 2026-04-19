@@ -28,8 +28,19 @@ export default async function OrgDetailPage({ params }: { params: Promise<{ id: 
         </h1>
       </header>
 
-      <section className="rounded-[var(--radius-card)] border border-[var(--border-default)] bg-[var(--surface-void)] p-6 text-sm text-[var(--text-secondary)]">
-        Clientes, contratos e dashboard chegam nas próximas stories (3.x em diante).
+      <section className="grid gap-4 sm:grid-cols-2">
+        <Link
+          href={`/orgs/${org.id}/clients`}
+          className="flex flex-col gap-2 rounded-[var(--radius-card)] border border-[var(--border-default)] bg-[var(--surface-void)] p-6 shadow-[var(--shadow-xs)] transition hover:border-[var(--border-strong)]"
+        >
+          <h2 className="text-lg font-semibold text-[var(--text-primary)]">Clientes</h2>
+          <p className="text-sm text-[var(--text-secondary)]">
+            Gerencia cadastros PF/PJ da organização.
+          </p>
+        </Link>
+        <div className="rounded-[var(--radius-card)] border border-dashed border-[var(--border-default)] p-6 text-sm text-[var(--text-tertiary)]">
+          Contratos + dashboard chegam nas próximas stories (4.x em diante).
+        </div>
       </section>
     </main>
   );

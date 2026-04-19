@@ -13,6 +13,7 @@
     "test:e2e": "playwright test"
   },
   "dependencies": {
+    "@apse/modules-clients": "workspace:*",
     "@apse/modules-organizations": "workspace:*",
     "@apse/shared-auth": "workspace:*",
     "@apse/shared-config": "workspace:*",

@@ -15,6 +15,56 @@ export type Database = {
   };
   public: {
     Tables: {
+      clients: {
+        Row: {
+          created_at: string;
+          document: string | null;
+          email: string | null;
+          id: string;
+          kind: Database['public']['Enums']['client_kind'];
+          name: string;
+          notes: string | null;
+          org_id: string;
+          phone: string | null;
+          status: Database['public']['Enums']['client_status'];
+          updated_at: string;
+        };
+        Insert: {
+          created_at?: string;
+          document?: string | null;
+          email?: string | null;
+          id?: string;
+          kind: Database['public']['Enums']['client_kind'];
+          name: string;
+          notes?: string | null;
+          org_id: string;
+          phone?: string | null;
+          status?: Database['public']['Enums']['client_status'];
+          updated_at?: string;
+        };
+        Update: {
+          created_at?: string;
+          document?: string | null;
+          email?: string | null;
+          id?: string;
+          kind?: Database['public']['Enums']['client_kind'];
+          name?: string;
+          notes?: string | null;
+          org_id?: string;
+          phone?: string | null;
+          status?: Database['public']['Enums']['client_status'];
+          updated_at?: string;
+        };
+        Relationships: [
+          {
+            foreignKeyName: 'clients_org_id_fkey';
+            columns: ['org_id'];
+            isOneToOne: false;
+            referencedRelation: 'organizations';
+            referencedColumns: ['id'];
+          },
+        ];
+      };
       members: {
         Row: {
           created_at: string;
@@ -88,6 +138,8 @@ export type Database = {
       current_user_org_ids: { Args: never; Returns: string[] };
     };
     Enums: {
+      client_kind: 'PF' | 'PJ';
+      client_status: 'active' | 'inactive' | 'archived';
       member_role: 'owner' | 'admin' | 'member';
     };
     CompositeTypes: {
@@ -99,6 +151,8 @@ export type Database = {
 export const Constants = {
   public: {
     Enums: {
+      client_kind: ['PF', 'PJ'],
+      client_status: ['active', 'inactive', 'archived'],
       member_role: ['owner', 'admin', 'member'],
     },
   },
