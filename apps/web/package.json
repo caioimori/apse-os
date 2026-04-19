@@ -13,6 +13,8 @@
     "test:e2e": "playwright test"
   },
   "dependencies": {
+    "@apse/integrations-asaas": "workspace:*",
+    "@apse/modules-billing": "workspace:*",
     "@apse/modules-clients": "workspace:*",
     "@apse/modules-contracts": "workspace:*",
     "@apse/modules-organizations": "workspace:*",

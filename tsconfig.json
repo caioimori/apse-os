@@ -11,6 +11,8 @@
     { "path": "./packages/modules/organizations" },
     { "path": "./packages/modules/clients" },
     { "path": "./packages/modules/contracts" },
+    { "path": "./packages/modules/billing" },
+    { "path": "./packages/integrations/asaas" },
     { "path": "./apps/web" }
   ]
 }
