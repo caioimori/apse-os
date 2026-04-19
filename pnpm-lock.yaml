@@ -32,6 +32,9 @@ importers:
 
   apps/web:
     dependencies:
+      '@apse/modules-organizations':
+        specifier: workspace:*
+        version: link:../../packages/modules/organizations
       '@apse/shared-auth':
         specifier: workspace:*
         version: link:../../packages/shared/auth
@@ -109,12 +112,52 @@ importers:
         specifier: ^2.1.4
         version: 2.1.9(@types/node@22.19.17)(jsdom@25.0.1)(lightningcss@1.32.0)
 
+  packages/modules/organizations:
+    dependencies:
+      '@apse/shared-auth':
+        specifier: workspace:*
+        version: link:../../shared/auth
+      '@apse/shared-db':
+        specifier: workspace:*
+        version: link:../../shared/db
+      '@apse/shared-domain':
+        specifier: workspace:*
+        version: link:../../shared/domain
+      '@apse/shared-events':
+        specifier: workspace:*
+        version: link:../../shared/events
+      zod:
+        specifier: ^3.23.8
+        version: 3.25.76
+    devDependencies:
+      typescript:
+        specifier: ^5.6.0
+        version: 5.9.3
+      vitest:
+        specifier: ^2.1.4
+        version: 2.1.9(@types/node@22.19.17)(jsdom@25.0.1)(lightningcss@1.32.0)
+
   packages/shared/auth:
     dependencies:
       '@apse/shared-db':
         specifier: workspace:*
         version: link:../db
+      '@supabase/ssr':
+        specifier: ^0.5.0
+        version: 0.5.2(@supabase/supabase-js@2.103.3)
+      '@supabase/supabase-js':
+        specifier: ^2.45.0
+        version: 2.103.3
+      next:
+        specifier: ^15.1.0
+        version: 15.5.15(@playwright/test@1.59.1)(react-dom@19.2.5(react@19.2.5))(react@19.2.5)
+      react:
+        specifier: ^19.0.0
+        version: 19.2.5
     devDependencies:
+      '@types/react':
+        specifier: ^19.0.0
+        version: 19.2.14
       typescript:
         specifier: ^5.6.0
         version: 5.9.3

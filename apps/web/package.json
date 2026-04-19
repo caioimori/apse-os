@@ -8,11 +8,12 @@
     "start": "next start",
     "lint": "biome check .",
     "typecheck": "tsc --noEmit",
-    "test": "vitest run",
+    "test": "vitest run --passWithNoTests",
     "test:watch": "vitest",
     "test:e2e": "playwright test"
   },
   "dependencies": {
+    "@apse/modules-organizations": "workspace:*",
     "@apse/shared-auth": "workspace:*",
     "@apse/shared-config": "workspace:*",
     "@apse/shared-db": "workspace:*",

@@ -8,6 +8,7 @@
     { "path": "./packages/shared/auth" },
     { "path": "./packages/shared/flags" },
     { "path": "./packages/shared/ui" },
+    { "path": "./packages/modules/organizations" },
     { "path": "./apps/web" }
   ]
 }
