@@ -1,142 +1,283 @@
 ---
-type: positioning
-title: What is ApseOS — identidade, posicionamento, tom
-status: draft
-date: 2026-04-19
-author: Caio Imori
-purpose: alinhar com Caio o que ApseOS É antes de rebuildar UI
+type: strategy
+title: O que é ApseOS — posicionamento v1.0
+date: 2026-04-20
+status: active
+supersedes: what-is-apseos draft (2026-04-19)
 ---
 
-# What is ApseOS
+# ApseOS — sala de comando financeira da agência
 
-Doc de conversa. Minha leitura atual do projeto baseada em tudo que li — PRD, strategy, ADRs, código da v0.1. Serve pra Caio validar ou corrigir antes da Fase A.
+Documento fonte-de-verdade do posicionamento. Tudo que for gerado a partir daqui (LP, onboarding, UI, copy, roadmap) obedece este doc.
 
 ---
 
-## 1. Minha leitura do que ApseOS É
+## 1. Frase-cliente (a que vai na LP)
 
-**Em 1 frase:** A camada financeira das agências brasileiras — SaaS que conecta CRM + gateway de cobrança e mostra lucro real por cliente em tempo real.
+> **"ApseOS é a sala de comando da sua agência. Abre de manhã, vê em 10 segundos como a empresa tá indo, e sabe exatamente o que fazer hoje pra crescer — do primeiro lead ao último cliente fiel."**
 
-**Em 1 parágrafo:** ApseOS resolve o problema de que agências brasileiras têm dados de receita, custo e margem espalhados em planilhas, gateway, CRM e cabeça do sócio. Unifica num painel único que responde a pergunta crítica que todo sócio de agência faz toda semana: *"qual cliente está me dando lucro de verdade?"*. O MVP foca dogfood interno da SINAPSE empresa antes de vender pra fora.
+---
 
-**Em 3 verbos:** Unifica. Revela. Decide.
+## 2. Categoria
 
-## 2. Quem é o usuário
+**ApseOS não é CRM. Não é ERP. Não é dashboard. Não é gerenciador de tarefas.**
 
-**ICP primário:** sócio-operador de agência BR de marketing/branding, 2-10 pessoas, fatura R$20k-200k/mês, usa Asaas + algum CRM, tem ≥3 clientes ativos.
+É **Core Financeiro da agência** — camada única que centraliza atração, conversão, retenção e escala, orientada por margem real.
 
-**Não é pra:**
-- Agências grandes (>50 pessoas) que já têm ERP
-- Freelancers solo (não precisa de multi-tenant)
-- Empresas fora de agência (SaaS, e-commerce, consultoria geral)
+Comparação honesta:
 
-**Persona canônica:**
-- Caio ou Soier em 2026. Decide entre 23h e 2h da manhã. Precisa olhar e saber se demite freela, aumenta preço, ou recusa cliente. Não quer gráfico bonito sem insight.
-
-## 3. Tom e vibe
-
-**É:**
-- Preciso como planilha de contador, mas com soul
-- Sério como ferramenta financeira, mas não hostil
-- Denso de informação, mas respirável
-- Opinativo sobre o que importa (margem, risco) sem ser autoritário
-
-**Não é:**
-- "Fun" tipo fintech gamificada
-- Minimalista ascético tipo Cal.com
-- Corporate frio tipo Bloomberg
-- Gradient-heavy tipo v0/Vercel AI
-
-**Referência de tom:** Linear pra disciplina visual + Ramp pra seriedade financeira + Stripe pra sinais numéricos. Nada de AbacatePay alegria-mint.
-
-## 4. Promessa nuclear
-
-> "Você descobre qual cliente está te dando prejuízo antes que ele te afunde."
-
-Tudo o mais (CRUD clientes, importar CRM, gerar cobrança) é infraestrutura pra entregar essa promessa.
-
-## 5. O que ApseOS NÃO é (pra não confundir)
-
-- **Não é CRM.** Não substitui Sonar/Pipedrive/RD. Consome dados deles.
-- **Não é gateway de cobrança.** Não processa pagamento. Orquestra Asaas.
-- **Não é contabilidade.** Não gera NF-e, DRE, fechamento contábil.
-- **Não é ERP.** Não faz folha, estoque, fiscal.
-- **Não é planilha bonita.** É decisão em tempo real.
-
-## 6. Três telas que definem o produto
-
-Se o usuário nunca voltar a usar ApseOS depois de ver, essas 3 telas DECIDEM:
-
-1. **Dashboard com cliente em risco destacado.** "Ana, Contrato MindLoop tá com margem 3%. Tá pagando caro os splits." Caio olha e sabe imediatamente se ajusta ou corta.
-2. **Contrato novo com preview de margem.** Caio fecha um contrato, ajusta split de freela/imposto, vê em tempo real se o deal vale. Sai dessa tela sabendo se topou um lucro real ou tá queimando caixa.
-3. **"A pagar sexta" consolidado.** Quinta-feira 23h. Caio abre e vê lista de quem pagar, valor, chave PIX. Decide em 10min.
-
-Se a v2 errar nessas 3, o produto não nasceu.
-
-## 7. Decisões estratégicas vigentes (lembrança)
-
-| Decisão | Fonte | Status |
+| Ferramenta | Foco | Lacuna |
 |---|---|---|
-| MVP dogfood SINAPSE antes de vender | `apse-os-decisao.md` | firme |
-| Zero LLM em runtime no MVP | ADR-003 | firme |
-| Modular Monolith | ADR-001 | firme |
-| RLS multi-tenant desde o início | ADR-005 | firme |
-| Localhost-first com mocks | ADR-002 | firme (Asaas mock até ter volume) |
-| Gatilho de reavaliar LLM: R$10k MRR | ADR-003 | em aberto |
-| Claude Max, nunca API paga | ADR-003 | firme (NON-NEGOTIABLE) |
-| Light-first, B&W puro, Inter Variable | ADR-008 | **recém decidido 2026-04-19** |
-
-## 8. Onde posso estar errado — perguntas pra Caio
-
-Quero testar minha leitura em 7 perguntas antes de começar a Fase A:
-
-### Q1 — Público
-"Agências BR 2-10 pessoas" é precisamente o ICP, ou aceita também **estúdios criativos** (branding, design, produto) que trabalham tipo agência? Muda mensagem da home?
-
-### Q2 — Dogfood vs venda
-Dogfood SINAPSE é a validação OU é o produto final pra sempre? Se um cliente de fora quiser comprar daqui 30 dias e estiver rodando estável, você vende ou pede pra esperar?
-
-### Q3 — A "camada financeira"
-Esse termo é literal (financeiro puro: receita, custo, lucro) ou se estende pra **operação** (projetos, prazos, entregáveis)? Ou seja — ApseOS é **só financeiro** ou **ops financeiro**?
-
-### Q4 — "Lucro real por cliente" = lifetime ou monthly?
-Quando aparecer o KPI "Margem Cliente X", é margem do mês corrente, dos últimos 30d, ou lifetime de todos contratos dele? Muda totalmente o design do dashboard.
-
-### Q5 — Splits = sócios ou só custos?
-O split de contrato tá suportando: revenue_share (sócio), collaborator (freela), tool (Figma), tax (imposto), other. **Revenue_share** implica que sócios dividem receita — isso é o pattern comum de agência SINAPSE ou só Caio trabalha solo agora?
-
-### Q6 — Relação com CRM
-Sonar/Pipedrive puxa leads/clientes → ApseOS cadastra como client. Bidirecional? Se fecho cobrança paga no ApseOS, empurra status "won/paid" pro CRM? Ou é import-only?
-
-### Q7 — Identidade da marca
-ApseOS é um **produto dentro do ecossistema SINAPSE** (tipo "SINAPSE Apse") ou é uma **empresa própria** com marca independente? Isso decide:
-- Home logada: mostra logo ApseOS ou SINAPSE?
-- Email do cliente: vem de `@apseos.com` ou `@sinapse.club`?
-- Pricing page: marca ApseOS ou SINAPSE?
+| Pipedrive / RD | Pipeline de vendas | Zero visão de margem pós-fechamento |
+| iClips | Gestão operacional | Financeiro é adicional, não core |
+| Kamino / Conta Azul | Financeiro / ERP | Não fala com conversão nem retenção |
+| Asana / ClickUp | Tarefa / projeto | Não sabe o que é um cliente |
+| **ApseOS** | **Receita + margem + retenção** | — |
 
 ---
 
-## 9. Proposta de posicionamento (rascunho pra aprovar)
+## 3. Os 4 pilares (funil completo)
 
-**Tagline:** "A camada financeira das agências brasileiras."
-
-**Sub-tagline técnica:** "Lucro real por cliente em tempo real. CRM + gateway + custos em um só painel."
-
-**Pitch de 30s:** "Agência brasileira sabe quanto fatura mas não sabe quanto lucra por cliente. Os dados estão espalhados entre planilha, Asaas, CRM e cabeça do sócio. ApseOS junta tudo e mostra margem em tempo real — você descobre qual cliente está dando prejuízo antes que ele te afunde. É o dashboard executivo que deveria vir junto com o Asaas."
-
-**Manifesto em 4 linhas:**
-- Número é verdade. Planilha é desculpa.
-- Margem > Faturamento.
-- Contrato fechado sem preview de margem é aposta cega.
-- Freela cobrado a maior é dinheiro vazando da mão do sócio.
+| Pilar | Pergunta que responde | Entrega principal |
+|---|---|---|
+| **Atração** | Meus leads valem a pena? | Lead scoring financeiro, fit de ticket, previsão de margem por segmento |
+| **Conversão** | Fecho esse deal ou perco dinheiro? | Preview de margem em proposta, simulação "e se?", alerta de deal ruim |
+| **Retenção** | Qual cliente tá fugindo? | Score de risco, queda de margem antecipada, ação sugerida |
+| **Escala** | Pra onde direciono investimento? | Segmento mais lucrativo, vertical com menor churn, benchmark histórico próprio |
 
 ---
 
-## 10. Próxima ação
+## 4. Princípio central — decide, não opera
 
-Caio valida este doc respondendo as 7 perguntas (Q1-Q7) ou corrigindo onde minha leitura está torta. Depois:
-- Atualizo este doc com as respostas viram versão 1.0
-- Crio story `A.1.app-shell.md` com tokens do ADR-008 fechados e posicionamento alinhado
-- Começamos a Fase A do rebuild
+| Dentro do ApseOS | Fora do ApseOS |
+|---|---|
+| "Qual cliente renegociar?" | "Quem vai escrever o post dessa semana?" |
+| "Esse deal tem margem boa?" | "Quem tá editando o vídeo?" |
+| "Quanto entra semana que vem?" | "Qual é a pauta do reel?" |
+| "Qual vertical escalar?" | "Quem revisa o design?" |
 
-**Sem esta conversa, qualquer UI que eu faça pode estar tecnicamente polida mas estrategicamente errada.**
+**Filtro único:** se a feature ajuda a **operar** (executar tarefa), fica fora. Se ajuda a **decidir** (crescer com margem), fica dentro.
+
+---
+
+## 5. Hábito — o primeiro app do dia
+
+Meta: ApseOS é a **primeira aba** que o dono de agência abre de manhã. Substitui 4 ansiedades em 1 app:
+
+| Sentimento | Hoje faz | Com ApseOS faz |
+|---|---|---|
+| "Tô ganhando dinheiro?" | Abre banco | Abre ApseOS |
+| "Posso gastar essa grana?" | Pergunta ao sócio | Abre ApseOS |
+| "Tô perdendo cliente?" | Checa WhatsApp | Abre ApseOS |
+| "Posso fechar esse deal?" | Calcula no papel | Abre ApseOS |
+
+**Loop Hooked aplicado:**
+- **Trigger externo** — push 7h30 com Morning Brief
+- **Trigger interno** — ansiedade de "tô saudável hoje?"
+- **Ação** — 1 tela, 10 segundos, 3 decisões prontas
+- **Recompensa variável** — score que oscila, insight novo, descoberta diária
+- **Investimento** — cada dado inserido melhora previsão de amanhã
+
+---
+
+## 6. Home = Morning Brief (tela âncora)
+
+Uma tela. Aberta em 2 segundos. Lida em 10.
+
+```
+┌────────────────────────────────────────────────────────────┐
+│                                                             │
+│   BOM DIA, CAIO                       sexta, 22 abr        │
+│                                                             │
+│   ┌────────────────────────────────────────────────┐       │
+│   │  SAÚDE FINANCEIRA       82 / 100    ↑3         │       │
+│   │  [sparkline 30 dias]                            │       │
+│   └────────────────────────────────────────────────┘       │
+│                                                             │
+│   ┌──────────────┐ ┌──────────────┐ ┌──────────────┐      │
+│   │ MARGEM MÊS   │ │ A RECEBER    │ │ EM RISCO     │      │
+│   │    14%       │ │  R$ 42.800   │ │     3        │      │
+│   │   ↑2pp       │ │  7 dias      │ │  clientes    │      │
+│   └──────────────┘ └──────────────┘ └──────────────┘      │
+│                                                             │
+│   3 AÇÕES DO DIA                                            │
+│   ─────────────────────────────────────────                │
+│   ▸ Renegociar cliente Acme (margem -6pp em 60d)           │
+│   ▸ Cobrar NF #203 vencida há 3d (R$ 4.200)                │
+│   ▸ Fechar proposta do lead MindLoop (margem ok 22%)       │
+│                                                             │
+└────────────────────────────────────────────────────────────┘
+```
+
+**Regra 1-3-3:**
+- **1 score** dominante (0-100)
+- **3 KPIs** suportando
+- **3 ações** executáveis
+
+---
+
+## 7. Arquitetura de módulos (sidebar slim, icon-only)
+
+5 módulos. Nada de sub-menu. Zero configurações/ajuda no sidebar principal.
+
+| Ícone | Módulo | Função |
+|---|---|---|
+| ▫ | **Home** | Morning Brief — tela âncora |
+| ▫ | **Clientes** | Retenção, margem real, score de risco |
+| ▫ | **Pipeline** | Atração + conversão com preview de margem |
+| ▫ | **Financeiro** | Caixa, recebimentos, cobrança, forecast |
+| ▫ | **Inteligência** | Insights, benchmark próprio, escala |
+
+Revisitar depois de validação com cliente zero (SINAPSE empresa) — pode ajustar pra mais ou menos.
+
+---
+
+## 8. IA — infraestrutura invisível
+
+**ApseOS não vende IA. Vende clareza. A IA é o motor invisível que gera a clareza.**
+
+| Onde IA trabalha | O que usuário vê |
+|---|---|
+| Lead scoring financeiro | Card mostra "margem esperada 18%" |
+| Movimentação automática de leads no pipeline | Lead pulou stage sozinho |
+| Churn preditivo | Cliente aparece em "risco" |
+| Categorização de custos importados | Despesa já taxonomizada |
+| Ranking de ações do dia | Lista 1-2-3 no Morning Brief |
+| Insight engine (job diário) | "Sabia que seus clientes de e-com têm 2x churn?" |
+| Forecast de caixa | Alerta de gap antes de acontecer |
+| Redação de email (renegociação/cobrança) | 1 clique → texto pronto pra revisar |
+
+Zero "fale com a IA". Zero chat. A inteligência é o comportamento, não a interface.
+
+---
+
+## 9. Princípios de design (AbacatePay-inspired, ApseOS-DNA)
+
+Referência visual: AbacatePay (densidade baixa, clareza brutal, hierarquia forte). DNA próprio: B&W puro (ADR-008), Inter Variable.
+
+**Leis invioláveis:**
+
+1. **3 cores, nunca 4** — branco, preto, 1 accent
+2. **1 fonte, 2 pesos** — Inter Variable (400 + 600)
+3. **Radius 24px** em cards principais (âncora AbacatePay)
+4. **Border > shadow** — depth via surface
+5. **Número grande, label pequena** — KPI domina, contexto sussurra
+6. **Densidade baixa** — espaço respira
+7. **Vocabulário de dono** — nada de jargão técnico
+
+**Limites forçados (escassez = simplicidade):**
+
+| Elemento | Máximo |
+|---|---|
+| Módulos no sidebar | 5 |
+| CTAs principais por tela | 2 |
+| KPIs na home | 3 + 1 score |
+| Ações sugeridas | 3 |
+| Colunas de tabela visíveis | 6 |
+| Níveis de menu | 1 |
+
+---
+
+## 10. Vocabulário — termos de dono
+
+| NÃO usa | Usa |
+|---|---|
+| Taxa de churn | Clientes saindo |
+| LTV | Quanto cada cliente rende |
+| Margem de contribuição | Lucro real por cliente |
+| Pipeline velocity | Deals andando |
+| CAC | Custo pra conquistar 1 cliente |
+| Forecast | Previsão de caixa |
+| Dashboard | Home / Sala de comando |
+| Métricas | Números que importam |
+| Churn preditivo | Quem está fugindo |
+
+---
+
+## 11. Wedge de entrada
+
+Agência não compra "plataforma completa" cold. Entra por dor quente.
+
+**Entrada única: "Clientes em Risco"** (Dor #1 + #2 da pesquisa combinadas).
+
+- Import CSV clientes + contratos com splits
+- Margem real calculada em tempo real
+- Lista ranqueada por score de risco
+- Ação sugerida por cliente
+
+Tempo pra valor: **10 minutos**. Pitch: *"Descubra em 10 minutos qual cliente está te dando prejuízo."*
+
+Tudo depois (pipeline, forecast, benchmark) é **expansão do hábito**, não entrada.
+
+---
+
+## 12. Pricing
+
+| Plano | Preço | Limite | ICP |
+|---|---|---|---|
+| **Entrada** | R$ 97/mês | até 10 clientes | Agência micro / em recuperação |
+| **Sweet spot** | R$ 297/mês | até 50 clientes | Core da base (78% do mercado) |
+| **Pro** | R$ 497/mês | ilimitado + pipeline + IA extra | Agências em escala |
+
+Stack atual fragmentado custa R$ 650-1050/mês (Pipedrive + Kamino/iClips + Conta Azul). ApseOS substitui com payback imediato.
+
+---
+
+## 13. Defensibilidade
+
+1. **Dado histórico** — quanto mais tempo de uso, mais preciso o forecast/score. Lock-in orgânico.
+2. **Inteligência composta** — cada ação do usuário alimenta o motor de sugestão.
+3. **Hábito diário** — substituir 4 ansiedades = substituir Pipedrive, planilha, contador mental.
+4. **Benchmark próprio** (fase 2, opt-in) — rede de agências compara sem expor dado individual.
+5. **Fonte única** — quem centraliza receita + margem + retenção não é deslocável por ponto-ferramenta.
+
+---
+
+## 14. Anti-posicionamento
+
+O que ApseOS **não é** — e por que recusa ser:
+
+- **Não é CRM** (mercado saturado, virou commodity)
+- **Não é ERP** (contador já cobre)
+- **Não é gestor de tarefas** (Asana/ClickUp fazem bem)
+- **Não é plataforma de execução** (iClips ocupa esse espaço)
+- **Não é "IA pra agência"** (IA é motor, não personalidade)
+- **Não é relatório mensal em PDF** (relatório é a tela, todos os dias)
+
+---
+
+## 15. Roadmap (fase 1 → fase 3)
+
+**Fase 1 (0-6m)** — Core da retenção + home-hábito
+- Morning Brief
+- Clientes (margem real + risco)
+- Financeiro básico (a receber, a pagar, forecast)
+- IA: churn preditivo + ranking de ações + categorização
+
+**Fase 2 (6-12m)** — Conversão inteligente
+- Pipeline com margem projetada
+- Automover de leads (IA move por sinal)
+- Simulador de proposta
+- Insight engine avançado
+
+**Fase 3 (12m+)** — Escala e rede
+- Benchmark opt-in entre agências
+- IA conversacional (pergunte ao ApseOS)
+- Redação automática de comunicação
+- Integrações (Asaas, CRMs externos, contabilidade)
+
+---
+
+## 16. Cliente zero
+
+SINAPSE empresa (dogfood). Caio + Soier usam antes de vender pra fora. Dados reais de:
+- Clientes SINAPSE (projetos cliente-facing)
+- Custos de entrega (freela, ferramenta, sócio-time)
+- Pipeline de novos deals
+- Retenção dos ativos
+
+Cliente zero valida Fase 1 inteira antes de qualquer venda externa.
+
+---
+
+*ApseOS v1.0 · posicionamento travado · abril 2026*
